@@ -30,39 +30,47 @@ frontend/     # Tampilan website, halaman, komponen
 
 1. **Unduh kode proyek**
 	- Klik tombol "Code" di GitHub, lalu pilih "Download ZIP" atau gunakan perintah:
-	  ```bash
-	  git clone <repo-url>
-	  cd sdn-petir-3-starter
-	  ```
+	```bash
+		git clone https://github.com/arifsuz/sdn-petir-3-website.git
+		cd sdn-petir-3-website
+	```
 2. **Pasang aplikasi pendukung**
 	- Pastikan sudah menginstall [Node.js](https://nodejs.org/) di komputer.
 3. **Install semua kebutuhan aplikasi**
 	- Jalankan perintah berikut di terminal:
-	  ```bash
-	  cd backend
-	  npm install
-	  cd ../frontend
-	  npm install
-	  ```
+	```bash
+		cd backend
+		npm install
+		cd ../frontend
+		npm install
+	```
 4. **Buat file pengaturan rahasia**
 	- Di folder `backend`, buat file bernama `.env` dan isi seperti contoh:
-	  ```env
-	  DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
-	  JWT_SECRET="kode_rahasia_anda"
-	  ```
-5. **Jalankan server backend**
+	```env
+		DATABASE_URL="mysql://user:password@localhost:3306/sdn_petir3"
+		JWT_SECRET="kode_rahasia_anda"
+	```
+5. **Inisialisasi database**
+	```bash
+		cd backend
+		npx prisma migrate dev
+	```
+6. **Seed data** (opsional)
+	```bash
+		npm run seed
+	```
+7. **Jalankan server backend**
 	- Di terminal:
-	  ```bash
-	  cd backend
-	  npm run dev
-	  ```
-6. **Jalankan tampilan website (frontend)**
-	- Di terminal lain:
-	  ```bash
-	  cd frontend
-	  npm run dev
-	  ```
-7. **Akses website**
+	```bash
+		cd backend
+		npm run dev
+	```
+8. **Jalankan tampilan website (frontend)**
+	```bash
+			cd frontend
+			npm run dev
+	```
+9. **Akses website**
 	- Buka browser dan kunjungi alamat yang muncul di terminal, biasanya `http://localhost:5173`.
 
 ---
@@ -86,22 +94,6 @@ frontend/     # Tampilan website, halaman, komponen
 
 ---
 
-## FAQ (Pertanyaan yang Sering Ditanyakan)
-
-**Q: Saya tidak bisa login, apa yang harus dilakukan?**
-A: Pastikan username dan password benar. Jika lupa, hubungi admin sekolah.
-
-**Q: Website tidak bisa dibuka?**
-A: Pastikan backend dan frontend sudah dijalankan sesuai langkah di atas. Cek juga koneksi internet dan pengaturan `.env`.
-
-**Q: Bagaimana cara menambah foto di galeri?**
-A: Login sebagai admin, lalu masuk ke menu galeri dan klik tombol tambah foto.
-
-**Q: Apakah data saya aman?**
-A: Data disimpan di server dan hanya bisa diakses oleh pengguna yang memiliki izin.
-
----
-
 ## Glosarium Istilah
 
 - **Node.js**: Program untuk menjalankan JavaScript di server.
@@ -120,67 +112,6 @@ A: Data disimpan di server dan hanya bisa diakses oleh pengguna yang memiliki iz
 4. Pull request ke branch `main`
 
 ---
-
-## Lisensi
-
-Proyek ini menggunakan lisensi MIT. Silakan gunakan dan modifikasi sesuai kebutuhan.
-# SDN Petir 3 Website
-
-## Deskripsi Proyek
-Website SDN Petir 3 adalah aplikasi web modern yang terdiri dari backend (Node.js, Express, Prisma) dan frontend (React, Vite, Tailwind CSS) untuk manajemen konten sekolah, galeri, blog, dan aktivitas organisasi.
-
-## Struktur Folder
-
-```
-backend/      # API, database, autentikasi
-frontend/     # UI, halaman web, komponen React
-```
-
-## Instalasi & Setup
-
-1. **Clone repository**
-	```bash
-	git clone <repo-url>
-	cd sdn-petir-3-starter
-	```
-2. **Install dependencies**
-	```bash
-	cd backend && npm install
-	cd ../frontend && npm install
-	```
-
-## Konfigurasi Lingkungan
-
-1. Buat file `.env` di folder `backend/` sesuai contoh berikut:
-	```env
-	DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
-	JWT_SECRET="your_jwt_secret"
-	```
-
-## Menjalankan Backend & Frontend
-
-1. **Backend**
-	```bash
-	cd backend
-	npm run dev
-	```
-2. **Frontend**
-	```bash
-	cd frontend
-	npm run dev
-	```
-
-## Database & Migrasi
-
-1. **Inisialisasi database**
-	```bash
-	cd backend
-	npx prisma migrate dev
-	```
-2. **Seed data** (opsional)
-	```bash
-	npm run seed
-	```
 
 ## Fitur Utama
 
