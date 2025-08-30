@@ -60,15 +60,14 @@ frontend/     # Tampilan website, halaman, komponen
 		npm run seed
 	```
 7. **Jalankan server backend**
-	- Di terminal:
 	```bash
 		cd backend
 		npm run dev
 	```
 8. **Jalankan tampilan website (frontend)**
 	```bash
-			cd frontend
-			npm run dev
+		cd frontend
+		npm run dev
 	```
 9. **Akses website**
 	- Buka browser dan kunjungi alamat yang muncul di terminal, biasanya `http://localhost:5173`.
