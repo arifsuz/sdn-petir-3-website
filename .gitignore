@@ -1,0 +1,21 @@
+node_modules
+# Keep environment variables out of version control
+.env
+# Prisma migrations and schema
+backend/prisma/migrations/
+backend/prisma/schema.prisma
+# Build output
+frontend/dist/
+backend/dist/
+# Log files
+*.log
+# macOS system files
+.DS_Store
+# Database files
+*.sqlite
+# Test coverage
+coverage/
+# VSCode local settings
+.vscode/
+# Local config files
+*.local.*
