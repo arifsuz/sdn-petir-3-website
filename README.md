@@ -58,8 +58,8 @@ frontend/     # Tampilan website, halaman, komponen
 6. **Seed data** (opsional)
 	```bash
 		npm run seed
-	```
-7. **Jalankan server backend**
+	```  
+7. **Jalankan server backend**  
 	```bash
 		cd backend
 		npm run dev

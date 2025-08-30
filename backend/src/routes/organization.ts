@@ -13,13 +13,23 @@ router.get('/', async (req,res)=>{
 router.post('/', requireAuth, async (req,res)=>{
   const data = req.body
   const item = await prisma.organizationMember.create({ data })
-  res.json(item)
+  res.json({ item })
+})
+
+router.put('/:id', requireAuth, async (req,res)=>{
+  const id = Number(req.params.id)
+  const data = req.body
+  const item = await prisma.organizationMember.update({
+    where: { id },
+    data
+  })
+  res.json({ item })
 })
 
 router.delete('/:id', requireAuth, async (req,res)=>{
   const id = Number(req.params.id)
   await prisma.organizationMember.delete({ where: { id } })
-  res.json({ ok:true })
+  res.json({ ok: true })
 })
 
 export default router
