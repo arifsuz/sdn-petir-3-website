@@ -13,7 +13,7 @@ export default function Navbar() {
     <header className="bg-white border-b sticky top-0 z-40">
       <div className="container h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 grid place-content-center text-white font-bold">SD</div>
+            <img src="/Logo-Sekolah.png" alt="Logo Sekolah" className="w-10 h-10 rounded-xl object-cover" />
           <div className="leading-tight">
             <div className="font-semibold">SDN Petir 3</div>
             <div className="text-xs text-gray-500">Kota Tangerang</div>
@@ -26,7 +26,6 @@ export default function Navbar() {
               {n.icon}{n.label}
             </NavLink>
           ))}
-          <a href="/admin" className="btn">Admin</a>
         </nav>
       </div>
     </header>

@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="font-semibold">Kontak</div>
           <ul className="mt-2 text-sm text-gray-600">
             <li>Email: sdnpetir3@example.sch.id</li>
-            <li>Telepon: (021) 000-000</li>
+            <li>Telepon: 0878-0864-2015</li>
           </ul>
         </div>
         <div className="text-sm text-gray-600">
