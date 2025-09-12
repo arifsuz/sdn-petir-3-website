@@ -1,7 +1,10 @@
+
+import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { School, Newspaper, CalendarDays, Users, Image as ImageIcon } from 'lucide-react'
+import { School, Newspaper, CalendarDays, Users, Image as ImageIcon, Menu, X } from 'lucide-react'
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false)
   const nav = [
     { to: '/', label: 'Home', icon: <School size={16}/> },
     { to: '/blog', label: 'Blog', icon: <Newspaper size={16}/> },
@@ -19,6 +22,7 @@ export default function Navbar() {
             <div className="text-xs text-gray-500">Kota Tangerang</div>
           </div>
         </Link>
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
           {nav.map(n => (
             <NavLink key={n.to} to={n.to} className={({isActive}) => 
@@ -27,7 +31,40 @@ export default function Navbar() {
             </NavLink>
           ))}
         </nav>
+        {/* Hamburger button for mobile */}
+        <button
+          className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          {open ? <X size={24}/> : <Menu size={24}/>}
+        </button>
       </div>
+      {/* Mobile menu overlay */}
+      {open && (
+        <div className="fixed inset-0 z-50 bg-black/40 md:hidden" onClick={() => setOpen(false)}>
+          <div
+            className="absolute top-0 right-0 w-64 h-full bg-white shadow-lg p-6 flex flex-col gap-4 animate-slide-in"
+            onClick={e => e.stopPropagation()}
+          >
+            <button className="self-end mb-4" onClick={() => setOpen(false)} aria-label="Close menu">
+              <X size={28}/>
+            </button>
+            {nav.map(n => (
+              <NavLink
+                key={n.to}
+                to={n.to}
+                className={({isActive}) =>
+                  'navlink flex items-center gap-2 py-2 px-3 rounded ' + (isActive ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100')
+                }
+                onClick={() => setOpen(false)}
+              >
+                {n.icon}{n.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   )
 }

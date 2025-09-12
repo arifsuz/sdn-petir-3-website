@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react'
 import api from '../lib/api'
 import { useForm, Controller } from 'react-hook-form'
 import ImageInput from '../components/ImageInput'
+// Import React Quill
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 // Import React Icons
 import { 
   HiHome, 
@@ -379,6 +382,27 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
   const token = localStorage.getItem('token')
   const location = useLocation()
   
+  // Konfigurasi React Quill
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'align': [] }],
+      ['link', 'image'],
+      ['clean'],
+      ['blockquote', 'code-block']
+    ],
+  }
+
+  const quillFormats = [
+    'header', 'bold', 'italic', 'underline', 'strike',
+    'color', 'background', 'list', 'bullet', 'indent',
+    'align', 'link', 'image', 'blockquote', 'code-block'
+  ]
+  
   // Function untuk memastikan URL gambar valid
   const getImageUrl = (url: string) => {
     if (!url) return ''
@@ -392,6 +416,16 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
     }
     
     return url
+  }
+  
+  // Function untuk mengekstrak teks dari HTML content
+  const extractTextFromHTML = (html: string, maxLength: number = 100) => {
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = html
+    const textContent = tempDiv.textContent || tempDiv.innerText || ''
+    return textContent.length > maxLength 
+      ? textContent.substring(0, maxLength) + '...'
+      : textContent
   }
   
   async function load(){
@@ -489,8 +523,9 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
         
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {resource==='posts' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
+            <div className="space-y-6">
+              {/* Baris pertama - Title dan Cover */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Judul Berita</label>
                   <input 
@@ -498,14 +533,6 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
                     placeholder="Masukkan judul berita" 
                     {...register('title', { required: true })}
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt/Ringkasan</label>
-                  <textarea 
-                    className="input w-full min-h-24" 
-                    placeholder="Ringkasan singkat berita" 
-                    {...register('excerpt', { required: true })}
-                  ></textarea>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Cover Image</label>
@@ -522,15 +549,41 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
                   />
                 </div>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
-                  <textarea 
-                    className="input w-full min-h-48" 
-                    placeholder="Tulis konten berita lengkap di sini..." 
-                    {...register('content', { required: true })}
-                  ></textarea>
+              
+              {/* Baris kedua - Excerpt */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt/Ringkasan</label>
+                <textarea 
+                  className="input w-full min-h-24" 
+                  placeholder="Ringkasan singkat berita" 
+                  {...register('excerpt', { required: true })}
+                ></textarea>
+              </div>
+              
+              {/* Baris ketiga - Rich Text Editor untuk Content */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Konten Berita</label>
+                <div className="border border-gray-300 rounded-lg">
+                  <Controller
+                    name="content"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <ReactQuill
+                        theme="snow"
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        modules={quillModules}
+                        formats={quillFormats}
+                        placeholder="Tulis konten berita lengkap di sini..."
+                        style={{ minHeight: '300px' }}
+                      />
+                    )}
+                  />
                 </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Gunakan toolbar di atas untuk memformat teks, menambahkan gambar, dan membuat konten yang menarik.
+                </p>
               </div>
             </div>
           )}
@@ -693,7 +746,7 @@ function CRUD({resource}:{resource:'posts'|'activities'|'gallery'|'organization'
                             <h4 className="text-lg font-semibold text-gray-900 mb-2">{it.title}</h4>
                             <p className="text-sm text-gray-600 mb-3 leading-relaxed">{it.excerpt}</p>
                             <div className="text-xs text-gray-500">
-                              Konten: {it.content?.substring(0, 100)}...
+                              Konten: {extractTextFromHTML(it.content || '', 100)}
                             </div>
                           </div>
                           <div className="flex justify-center">

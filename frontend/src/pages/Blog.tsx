@@ -63,7 +63,10 @@ export default function Blog(){
                     {dayjs(p.createdAt).format('DD MMM YYYY')}
                   </div>
                   <h2 className="text-xl font-semibold mt-1 mb-2">{p.title}</h2>
-                  <p className="text-gray-600 mb-3">{p.excerpt}</p>
+                  <div 
+                    className="text-gray-600 mb-3 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{ __html: p.excerpt }}
+                  />
                   <Link to={`/post/${p.id}`} className="btn btn-primary flex items-center w-fit">
                     Baca Selengkapnya <HiArrowRight className="ml-2 w-4 h-4" />
                   </Link>

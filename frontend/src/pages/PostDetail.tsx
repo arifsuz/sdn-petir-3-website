@@ -143,18 +143,13 @@ export default function PostDetail() {
             </h1>
             
             <div className="text-lg text-gray-600 mb-6 leading-relaxed border-l-4 border-blue-200 pl-4 bg-blue-50 p-4 rounded-r-lg">
-              {post.excerpt}
+              <div dangerouslySetInnerHTML={{ __html: post.excerpt }} />
             </div>
             
-            <div className="prose max-w-none">
-              {post.content.split('\n').map((paragraph, index) => (
-                paragraph.trim() && (
-                  <p key={index} className="mb-4 text-gray-700 leading-relaxed text-base">
-                    {paragraph.trim()}
-                  </p>
-                )
-              ))}
-            </div>
+            <div 
+              className="prose prose-lg max-w-none text-gray-700"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
             
             {/* Sharing Section */}
             <div className="mt-8 pt-6 border-t border-gray-200">
